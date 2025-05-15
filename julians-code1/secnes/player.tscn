@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=3 uid="uid://clj5w1tr6pu77"]
+
+<<<<<<< HEAD:julians-code1/secnes/player.tscn
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_kpjcp"]
+=======
+[ext_resource type="Script" uid="uid://dvr0um8t7mvfs" path="res://player.gd" id="1_kpjcp"]
+>>>>>>> f6a4856cccc912bd8d539872ae565ecda761526a:julians-code1/Player.tscn
+[ext_resource type="Texture2D" uid="uid://3jv44ml5dlde" path="res://Fritten.jpg" id="2_kne1u"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e80uo"]
+radius = 18.0
+height = 74.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wvn8q"]
+radius = 33.0
+height = 118.0
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 3
+script = ExtResource("1_kpjcp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0.999997, 2.38419e-07)
+scale = Vector2(0.01745, 0.04445)
+texture = ExtResource("2_kne1u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_e80uo")
+
+[node name="player_hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player_hitbox"]
+shape = SubResource("CapsuleShape2D_wvn8q")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="healthbar" type="ProgressBar" parent="."]
+modulate = Color(0.415686, 1, 0.223529, 1)
+offset_left = -23.0
+offset_top = 22.0
+offset_right = 58.0
+offset_bottom = 49.0
+scale = Vector2(0.6, 0.6)
+value = 100.0
+show_percentage = false
+
+[node name="regin_timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="attack_cooldown" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="deal_attack_timer" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="body_entered" from="player_hitbox" to="." method="_on_player_hitbox_body_entered"]
+[connection signal="body_exited" from="player_hitbox" to="." method="_on_player_hitbox_body_exited"]
+[connection signal="timeout" from="regin_timer" to="." method="_on_regin_timer_timeout"]
+[connection signal="timeout" from="attack_cooldown" to="." method="_on_attack_cooldown_timeout"]
